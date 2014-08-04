@@ -70,11 +70,18 @@
         [self enterPressed];
     }
     NSString *operater = sender.currentTitle;
-//    if ([operater isEqualToString:@"+"]) {
-//        [self.historyDisplay.text stringByReplacingOccurrencesOfString:@" " withString:@"+"];
-//    }
+    if ([operater isEqualToString:@"+"] || [operater isEqualToString:@"-"] ||
+        [operater isEqualToString:@"/"] || [operater isEqualToString:@"*"]) {
+        
+        self.historyDisplay.text = [self.historyDisplay.text stringByReplacingOccurrencesOfString:@" " withString:operater];
+    }
+    else if ([operater isEqualToString:@"sqrt"] || [operater isEqualToString:@"sin"] ||
+             [operater isEqualToString:@"cos"] || [operater isEqualToString:@"log"])
+    {
+        self.historyDisplay.text = [NSString stringWithFormat:@"%@%@%@%@",operater,@"(",self.historyDisplay.text,@")"];
+    }
     
-    self.historyDisplay.text = [NSString stringWithFormat:@"%@%@%@",self.historyDisplay.text,@" ",operater];
+//    self.historyDisplay.text = [NSString stringWithFormat:@"%@%@%@",self.historyDisplay.text,@" ",operater];
     double result = [self.calBrain performOperation:sender.currentTitle];
     
     NSString *resultString = [NSString stringWithFormat:@"%g", result];
@@ -83,7 +90,14 @@
 
 - (IBAction)enterPressed
 {
-    self.historyDisplay.text = [NSString stringWithFormat:@"%@%@%@",self.historyDisplay.text,@" ",self.display.text];
+    if (![self.historyDisplay.text isEqualToString:@""])
+    {
+        self.historyDisplay.text = [NSString stringWithFormat:@"%@%@%@",self.historyDisplay.text,@" ",self.display.text];
+    }
+    else
+    {
+        self.historyDisplay.text = self.display.text;
+    }
     if ([self.display.text isEqualToString:@"π"])
     {
         [self.calBrain pushOperand:3.14];
@@ -103,7 +117,11 @@
 {
     [self.calBrain clearHistory];
     self.historyDisplay.text = @"";
-    self.display.text = 0;
+    self.display.text = @"0";
 }
 
+-(IBAction)undoButton
+{
+    
+}
 @end

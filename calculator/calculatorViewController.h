@@ -16,5 +16,6 @@
 - (IBAction)operationPressed:(id)sender;
 - (IBAction)enterPressed;
 - (IBAction)clearButton;
+- (IBAction)undoButton;
 
 @end
