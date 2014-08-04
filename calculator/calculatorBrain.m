@@ -61,7 +61,7 @@
     else if([topStack isKindOfClass:[NSString class]])
     {
         NSString *operation = topStack;
-        
+        //normal function for calculator
         if ([operation isEqualToString:@"+"]) 
         {
             result = [self popOperandOffStack:stack] + [self popOperandOffStack:stack];
@@ -88,7 +88,7 @@
         }
         else if ([operation isEqualToString:@"cos"])
         {
-            result = sin([self popOperandOffStack:stack]);
+            result = cos([self popOperandOffStack:stack]);
         }
         else if ([operation isEqualToString:@"sqrt"])
         {
@@ -112,6 +112,7 @@
     return [self popOperandOffStack:stack];
 }
 
+//remove all the calculator history
 - (void)clearHistory
 {
     [self.programStack removeAllObjects];
